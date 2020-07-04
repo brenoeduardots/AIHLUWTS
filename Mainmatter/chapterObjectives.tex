@@ -1,0 +1,16 @@
+\chapter{Objectives}
+The first objective of this project has been to develop a reservoir simulator with the following features:
+
+\begin{itemize}
+	\item Single-phase fluid.
+	\item Compressible flow.
+	\item Cartesian grid.
+	\item Domain comprising a vertical well.
+	\item Peaceman well model.
+	\item Neumann boundary condition.
+	\item Software developed in C language.
+	\item Linearization by simple iteration of the transmissibility terms.
+	\item Unsymmetrical system of equations solved by utilizing UMFPACK solvers.
+\end{itemize}
+
+After developing the software, the next step has been to validate it in comparison to simulations with industry-standard software. The second objective of this project was to analyze the heterogeneity losses during upscaling in well testing simulations. Fine-grid models have been initially built and coarser models have been subsequently obtained with averaging-based upscaling. After building and simulating the fine and coarse models, their bottom hole pressures and Bourdet plots have been obtained and their discrepancy has been evaluated.

@@ -1,0 +1,29 @@
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RO]{\slshape\nouppercase{\leftmark}}
+\fancyhead[LE]{\slshape\nouppercase{\leftmark}}
+\cfoot{\thepage}% Centre footer
+\makeatletter
+\let\ps@plain\ps@fancy% plain page style = fancy
+\makeatother
+
+\fancypagestyle{nomenclature}{
+	\fancyhf{}
+	\fancyhead[RO]{\slshape\nouppercase{Nomenclature}}
+	\fancyhead[LE]{\slshape\nouppercase{Nomenclature}}
+}
+\fancypagestyle{epigraph}{
+	\fancyhf{}
+	\fancyhead[RO]{\slshape\nouppercase{Epigraph}}
+	\fancyhead[LE]{\slshape\nouppercase{Epigraph}}
+}
+\fancypagestyle{dedication}{
+	\fancyhf{}
+	\fancyhead[RO]{\slshape\nouppercase{Dedication}}
+	\fancyhead[LE]{\slshape\nouppercase{Dedication}}
+}
+\fancypagestyle{acknowledgments}{
+	\fancyhf{}
+	\fancyhead[RO]{\slshape\nouppercase{Acknowledgments}}
+	\fancyhead[LE]{\slshape\nouppercase{Acknowledgments}}
+}

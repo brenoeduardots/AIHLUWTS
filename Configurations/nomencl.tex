@@ -1,0 +1,14 @@
+\renewcommand\nomgroup[1]{%
+	\item[\bfseries
+	\ifstrequal{#1}{A}{Acronyms}{%
+		\ifstrequal{#1}{R}{Roman Symbols}{%
+			\ifstrequal{#1}{G}{Greek Symbols}{
+				\ifstrequal{#1}{S}{Superscripts}{
+					\ifstrequal{#1}{U}{Subscripts}{
+	}}}}}%
+	]}
+
+\newcommand{\nomunit}[1]{%
+	\renewcommand{\nomentryend}{\hspace*{\fill}#1}%
+}
+\makenomenclature
