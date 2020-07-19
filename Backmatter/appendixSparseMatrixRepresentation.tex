@@ -9,7 +9,7 @@ According to \cite{Golub1996}, a matrix is sparse if most of its elements are ze
 
 Sparse matrices are related to systems with few pairwise interactions. Since each grid block of the model only has pairwise interactions with their neighbors, the resulting linear system of equations has a sparse coefficient matrix. If all the cells in the grid had pairwise interactions with all the other grid blocks, the resulting matrix would be dense, which is not the case of this problem.
 
-A simple way to computationally store a $m \times n$ matrix $M$ is by utilizing a two-dimensional array, with dimensions $m \times n$. If this matrix is composed of real numbers, those two-dimensional arrays would store $m \times n$ floating-point variables. This is a common way to store data for simple, dense matrices. However, if $M$ is a sparse matrix there are more efficient ways for doing that, avoiding unnecessary storage of the zeroes. For this project, the sparse matrix has been stored with the CSC (Compressed Sparse Column) method. This method is compatible with most of the tools available for solving sparse linear systems, such as UMFPACK and Eigen. For understanding the CSC method, consider below the example shown in the \cite{UMFPACK}. A matrix $A$ is defined as:
+A simple way to computationally store a $m \times n$ matrix $M$ is by utilizing a two-dimensional array, with dimensions $m \times n$. If this matrix is composed of real numbers, those two-dimensional arrays would store $m \times n$ floating-point variables. This is a common way to store data for simple, dense matrices. However, if $M$ is a sparse matrix there are more efficient ways for doing that, avoiding unnecessary storage of the zeroes. For this project, the sparse matrix has been stored with the CSC (Compressed Sparse Column) method. This method is compatible with most of the tools available for solving sparse linear systems, such as UMFPACK and Eigen. For understanding the CSC method, consider below the example shown in the \cite{Davis1995}. A matrix $A$ is defined as:
 \begin{equation}
 	A = 
 	\begin{bmatrix}
@@ -177,7 +177,7 @@ Hence, the matrix resulting from Eqs. \ref{solution2} to \ref{solution37} can be
 		\hline \multicolumn{3}{r}{{Continued on next page}} \\ \hline
 		\endfoot
 		
-		\hline \hline
+		\bottomrule
 		\endlastfoot
 	
 		1	&	1,2,5,13	&	$C^{\stackrel{(\nu)}{n+1}}_{1}$, $E^{\stackrel{(\nu)}{n+1}}_{1}$, $N^{\stackrel{(\nu)}{n+1}}_{1}$, $B^{\stackrel{(\nu)}{n+1}}_{1}$ 	\\

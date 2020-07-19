@@ -1,7 +1,0 @@
-\newpage \vspace*{4cm}
-\pdfbookmark{Acknowledgments}{acknowledgments} % Sets a PDF bookmark for the dedication
-\thispagestyle{empty}
-\begin{center}
-	\large \emph{ I wish to express my profound gratitude to Wagner Barros, who mentored and guided me since the beginning of this project with unparalleled attention, enthusiasm and support. Without his persistent help, the goal of this project would not have been realized. I also want to thank Dr. Oldrich Romero, a highly supportive and enthusiastic professor, always caring for the Petroleum Engineering community of the Universidade Federal do Espírito Santo. In addition, I wish to express my appreciativeness to Dr. Ana Paula Meneguelo, who provided me a direction and an introduction to Reservoir Engineering concepts and technologies utilized in this endeavor. Günter Gaede, a friend of mine, also helped me a lot in this project, by sharing many hours of his time with me for designing and debbuging the software utilized in it, always with kind and patience.
-	The Ciência sem Fronteiras (Science without Borders) program from the Brazilian Ministry of Education is also responsible for making this project possible, since it enabled me to study abroad at the Montana Technological University and attend the excellent Reservoir Simulation lectures of Dr. Todd Hoffman, which I am very grateful. I also want to express my thanks for Ian Duncan}
-\end{center}
