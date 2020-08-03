@@ -18,52 +18,50 @@
 \usepackage{tikz}\input{Configurations/tikz}
 \usepackage{longtable}
 
-\graphicspath{ {Images/} }
+\input{Configurations/global}
 
 \includeonly{
-%Frontmatter/cover,
-%Frontmatter/backCover,
-%Frontmatter/signaturePage,
-Frontmatter/StartNumbering,
-%Frontmatter/abstract,
-%Frontmatter/dedication,
-%Frontmatter/acknowledgments,
-%Frontmatter/quote,
-%Frontmatter/lists,
-Mainmatter/chapterIntroduction,
-%Mainmatter/chapterObjectives,
-%Mainmatter/chapterMathematicalFormulation,
-%Mainmatter/chapterNumericalFormulation,
-%Mainmatter/chapterWellRepresentation,
-%Mainmatter/chapterSolution,
-%Mainmatter/chapterUpscaling,
-%Mainmatter/chapterWellTesting,
-Mainmatter/chapterResults,
-%Mainmatter/chapterFinalRemarks,
+Frontmatter/cover,
+Frontmatter/back-cover,
+Frontmatter/signature-page,
+Frontmatter/start-numbering,
+Frontmatter/abstract,
+Frontmatter/dedication,
+Frontmatter/acknowledgments,
+Frontmatter/quote,
+Frontmatter/lists,
+Mainmatter/chapter-introduction,
+%Mainmatter/chapter-mathematical-formulation,
+%Mainmatter/chapter-numerical-formulation,
+%Mainmatter/chapter-well-representation,
+%Mainmatter/chapter-solution,
+%Mainmatter/chapter-upscaling,
+%Mainmatter/chapter-well-testing,
+%Mainmatter/chapter-AIHLUWTS,
+%Mainmatter/chapter-final-remarks,
 %Backmatter/bibliography,
-Backmatter/appendices
+%Backmatter/appendices
 }
 
 \begin{document}
 	\include{Frontmatter/cover}
-	\include{Frontmatter/backCover}
-	\include{Frontmatter/signaturePage}
-	\include{Frontmatter/StartNumbering}
+	\include{Frontmatter/back-cover}
+	\include{Frontmatter/signature-page}
+	\include{Frontmatter/start-numbering}
 	\include{Frontmatter/abstract}
 	\include{Frontmatter/dedication}
 	\include{Frontmatter/acknowledgments}
 	\include{Frontmatter/quote}
 	\include{Frontmatter/lists}
-	\include{Mainmatter/chapterIntroduction}
-	\include{Mainmatter/chapterObjectives}
-	\include{Mainmatter/chapterMathematicalFormulation}
-	\include{Mainmatter/chapterNumericalFormulation}
-	\include{Mainmatter/chapterWellRepresentation}
-	\include{Mainmatter/chapterSolution}
-	\include{Mainmatter/chapterUpscaling}
-	\include{Mainmatter/chapterWellTesting}
-	\include{Mainmatter/chapterResults}
-	\include{Mainmatter/chapterFinalRemarks}
+	\include{Mainmatter/chapter-introduction}
+	\include{Mainmatter/chapter-mathematical-formulation}
+	\include{Mainmatter/chapter-numerical-formulation}
+	\include{Mainmatter/chapter-well-representation}
+	\include{Mainmatter/chapter-solution}
+	\include{Mainmatter/chapter-upscaling}
+	\include{Mainmatter/chapter-well-testing}
+	\include{Mainmatter/chapter-AIHLUWTS}
+	\include{Mainmatter/chapter-final-remarks}
 	\include{Backmatter/bibliography}
 	\include{Backmatter/appendices}
 \end{document}

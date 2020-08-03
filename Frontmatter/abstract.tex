@@ -1,12 +1,36 @@
 \begin{abstract}
-	Well testing is important for the development of oil and gas fields, primarily for determining petrophysical proprieties in the reservoir and obtaining dynamic information about producing-formation limits. Those data are essential for optimizing the design of development strategies and assessing decision making, adding profitability and mitigating risks in hydrocarbon assets.
-	Reservoir simulation can be utilized as a tool for representing real well test results, as could be seen in \cite{Bourdet2002} and \cite{Al-Khalifah1988}. Some applications include assessing the design of well tests, inverse modeling, and assembling petrophysical data to full-field models. To perform the majority of reservoir simulation workflows, high-resolution geological models need to be scaled up in low-resolution grids due to computational limitations, time-performance, and the necessity of decreasing parameters for history matching. Micro-heterogeneity effects are often misrepresented by coarse grid blocks, which motivates a high academic effort towards upscaling.
-
-	The main objective of this project is to study the heterogeneity losses during upscaling processes applied to synthetic well tests.  A reservoir simulator has been developed in C language considering a single-phase flow of compressible fluid in a porous medium. It has been utilized a finite differences approach, with fully implicit temporal discretization. The linearization has been done by the simple iteration of transmissibility terms, and the sparse system of equations has been solved utilizing the UMFPACK (Unsymmetric Multifrontal sparse LU Factorization Package) library. The simulator has been validated by comparing its results with industry-standard software. After achieving high accuracy in the validation, fine-grid synthetic sandstone models have been created and upscaled into coarser grids. Finally, those high and low-resolution grids have been put under a flow simulation for a drawdown test scenario, and the results of their bottom hole pressure, pressure drop, and Bourdet derivative have been analyzed.
+	%
+	Reservoir models are essential tools for managing oil and gas projects since they can predict the outcomes of different development strategies, thus optimizing the process of decision-making.
+	%
+	A key source of data for those models is well testing, which provides valuable information about the well and reservoir in a dynamic state.
+	%
+	The standard workflow of well test interpretation includes calibrating analytical and numerical simulations to observed results, then obtaining well and reservoir data by inverse modeling.
+	%
+	Creating those numerical models usually requires the upscaling of a high-resolution geological grid into a low-resolution representative model, which is necessary for optimizing the usage of computational power.
+	%
+	Under certain circumstances, upscaling can generate an accurate representation of those fine-scale models; however, as \cite{Christie1996} states, the accuracy of this process is hardly guaranteed.
+	%
+	Thus, the main objective of this project is to investigate the effects of upscaling when utilizing numerical simulations to support well test interpretation.
+	
+	The methodology of this project consists of the development and utilization of a  reservoir simulator.
+	%
+	This simulator has been developed in C language, resembling a single-phase flow of compressible fluid in the surroundings of a vertical, multilayered well.
+	%
+	The mathematical model has been discretized by a finite differences approach with a fully implicit temporal discretization.
+	%
+	Its linearization has been done with what \cite{Ertekin2001} describes as the simple iteration of the transmissibility terms, and the sparse system of equations has been solved by utilizing the UMFPACK (Unsymmetric Multifrontal sparse LU Factorization Package) library.
+	%
+	This simulator has been validated by comparing its results with simulation done with industry-standard software.
+	%
+	After this validation, four fine-grid synthetic sandstone models have been created and upscaled into four coarse-grid models.
+	%
+	Next, those eight cases have been put under a flow simulation for a drawdown test scenario.
+	%
+	Finally, the results of their bottom-hole pressure, pressure drop, and Bourdet derivative have been analyzed.
 	\\
 	\\
 	\noindent
 	\nomenclature[A]{BTCS}{Backwards-time, central-space}
 	\nomenclature[A]{UMFPACK}{Unsymmetric Multifrontal sparse LU Factorization Package}
-	Keywords: reservoir simulation, single-phase flow, compressible flow, well testing, upscaling.
+	Keywords: reservoir simulation, well testing, upscaling, single-phase flow.
 \end{abstract}

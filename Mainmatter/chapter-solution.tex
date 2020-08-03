@@ -1,0 +1,244 @@
+\chapter{Solution}
+\label{chapter-solution}
+
+The previous chapters have shown how the single-phase flow equation has been defined, discretized, simplified, linearized, and linked with the well model.
+%
+Then it is possible to initialize the simulation and advance it in time.
+%
+This chapter is composed of two sections, the equilibration process and the advancement in time.
+%
+The first shows how the pressure distribution in the reservoir will be calculated for time zero.
+%
+The second shows how the pressure at the next time step will be calculated, thus advancing the simulation in time.
+%
+Finally, the last section shows how the simulator has been validated by comparing its results with reliable data.
+
+\section{Equilibration Process}
+
+At the beginning of the simulation, the initial pressures at each grid block $p_{i,j,k}^{n=0}$ are usually unknown.
+%
+Thus, it is necessary to calculate them before advancing in time.
+%
+Typically, the user of a reservoir simulator has to input one or more value of pressures $P^0$ at reference depths $Z^0$, in what is called an equilibration table.
+%
+Then the simulator can compute the initial pressure distribution in the entire reservoir by applying hydrostatics.
+%
+This step is known as the equilibration process and will be described in this section.
+%
+Assuming a hydrostatic equilibrium at the time zero, $\nabla \Phi = 0$, Eq. \ref{eq:10} can be rewritten as:
+%
+\begin{align}
+	\nabla \Phi=\nabla p - \gamma \nabla Z = 0.
+\end{align}
+%
+Thus:
+%
+\begin{align}
+	P^0 - p_{i,j,k} - \gamma_{i,j,k}(Z^0 - Z_{i,j,k}) = 0,
+\end{align}
+%
+which can be rewritten as:
+%
+\begin{align}
+	p_{i,j,k}=P^0+\gamma_{i,j,k}(Z_{i,j,k}-Z^0),
+\end{align}
+%
+Since the scenario considers a compressible fluid, its specific weight $\gamma$ can change with pressure.
+%
+Thus, it would be necessary to calculate both the pressure and the specific weight.
+%
+Since they are mutually dependent unknowns, it is necessary to perform an iteration.
+%
+Utilizing an index $\nu$ for the iteration level, the specific weight $\gamma$ will be evaluated in level $\nu$ and the pressure $p_{i,j,k}$ will be evaluated in the level $\nu+1$:
+%
+\begin{align}
+	p^{(\nu+1)}_{i,j,k}=P^0+\gamma^{(\nu)}_{i,j,k}(Z_{i,j,k}-Z^0).
+\end{align}
+%
+Figure \ref{figure-equilibration-process-flow-chart} shows this iterative process for a grid block $i$, $j$, $k$. $\epsilon$ is the tolerance of the iteration. 
+%
+It is set to be equal to $10^-8$ for all the simulations in this project.
+%
+The equilibration process consists in applying this process for every grid block in the model.
+%
+After that, the pressure initialization is done, and it is then possible to advance the simulation in time.
+%
+\nomenclature[G]{$\epsilon$}{Tolerance of the iteration}
+%
+\begin{figure}[H]
+	\centering
+	\input{Flowcharts/equilibration_process}
+	\caption{Iteration in the equilibration process.}
+	\label{figure-equilibration-process-flow-chart}
+\end{figure}
+
+\section{Advancing in Time}
+
+The \autoref{chapter-numerical-formulation} presents the discretized and linearized form of the single-phase flow equation, Eq. \ref{equation-single-phase-flow-discretized-linearized}.
+%
+After applying this equation to every grid block in the model, a linear system of equations is obtained.
+%
+The \autoref{appendix-visualization-of-the-linear-system-of-equations} shows how such a system is generated for a simple example of a tridimensional grid.
+%
+This section shows how to utilize this linear system of equations to calculate the pressure at a new time step, hence, advancing the simulation in time.
+
+Developing a linear algebra solver is not the focus of this project.
+%
+Thus, an external, open-source library has been utilized for solving the linear system of equations.
+%
+This library is the UMFPACK, which stands for Unsymmetric, Multifrontal Sparse LU Factorization Package.
+%
+It is a package that allows the solution of sparse linear systems by the method of LU factorization.
+%
+\autoref{appendix-sparse-matrix-representation} shows how the linear system of equations has been represented in a compressed format (CSC) for enabling its solution with UMFPACK.
+
+After the equilibration process has been finished, as described in the previous section, the initial pressure distribution in the reservoir $p_{i,j,k}^{n = 0}$ is obtained and then it is possible to calculate $p_{i,j,k}^{n + 1}$.
+%
+Figure \ref{figure-advance-in-time-flow-chart} shows the algorithm for advancing the simulation in time, based on the Eq. \ref{equation-single-phase-flow-discretized-linearized}.
+%
+Its convergence condition is that the absolute value of the difference between the norms of the pressures at the iteration levels of $\nu+1$ and $\nu$ should be inferior to the tolerance $\epsilon$, defined as $1 \times 10^{-8}$ for the models run in this project.
+%
+\nomenclature[S]{$\nu$}{Iteration index}
+\nomenclature[S]{n}{Time index}
+%
+\begin{figure}[H]
+	\centering
+	\scalebox{.9}{\input{Flowcharts/advance_in_time}}
+	\caption{Iteration for calculating the pressure distribution after a time step.}
+	\label{figure-advance-in-time-flow-chart}
+\end{figure}
+
+\section{Validation}
+
+A model should provide an accurate representation of a real system.
+%
+Thus, an essential part of developing a reservoir simulation model is to ensure accuracy by validating its simulation results by comparing them with reliable data. 
+%
+This validation has been done in this project by comparing the CSPF (a possible name for this simulator, which stands for Compressible, Single-Phase Flow simulator) simulation results with the ones generated by an industry-standard simulator for the same models.
+
+Two models have been utilized for this validation.
+%
+The first is a buildup/ drawdown well test scenario with homogeneous porosity and permeabilities.
+%
+The second is a similar scenario, but the only difference is that the porosities and permeabilities are heterogeneous, generated by utilizing normal and log-normal distributions, respectively.
+%
+Table \ref{table-parameters-for-the-homogeneous-validation-model} shows the parameters utilized in the first validation model:
+%
+\nomenclature[A]{CSPF}{Compressible, Single-Phase Flow simulator}
+%
+\begin{table}[htbp]
+	\small
+	\centering
+	\caption{Parameters of the homogeneous scenario for the validation.}
+	\label{table-parameters-for-the-homogeneous-validation-model}
+	\begin{tabular}{c c}
+		\toprule
+		Parameter & Value (if applicable)\\
+		\midrule
+		Number of grid blocks in the $x$ direction & 15\\
+		Number of grid blocks in the $y$ direction & 15\\
+		Number of grid blocks in the $z$ direction & 10\\
+		Boundary conditions & Sealed reservoir \\
+		Well & Vertical well in the\\
+		& center of the reservoir\\
+		Completions & From the top to the\\
+		& bottom of the reservoir\\
+		Length of the grid blocks in the $x$ direction & 164.042 ft\\
+		Length of the grid blocks in the $y$ direction & 164.042 ft\\
+		Length of the grid blocks in the $z$ direction & 16.4042 ft\\
+		Average porosity & 10\%\\
+		Average horizontal permeability & 200 mD\\
+		Average vertical permeability & 20 mD\\
+		Formation compressibility & $1.31 x 10^{-4}$ psi$^{-1}$\\
+		Fluid compressibility &  1.41 x 10$^{-5}$ psi$^{-1}$\\
+		Depth of the topmost layer & 10,498.69 ft\\
+		Reference depth for the initial pressure & 10,498.69 ft\\
+		Initial pressure at the reference depth & 3,916.01 psi\\
+		Well radius & 6 in\\
+		Skin factor & -0.5\\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The fluid utilized in both models has its proprieties described in Figure \ref{figure-fluid-proprieties}.
+%
+In the single-phase flow equation, the FVF, viscosity, and specific weight are obtained by applying a linear interpolation in these data.
+%
+The fluid bubble point pressure is 3296.27 psi.
+%
+This specific fluid model has been chosen since the pressure in the reservoir never reaches a value lower than its bubble point pressure and, therefore, would avoid a scenario of multiphase flow inferred by dissociated gas.
+%
+The simulator developed in this project can not represent a situation of multiphase flow and would give unrealistic results.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{figure-fluid-proprieties.png}
+	\caption{Fluid proprieties for the simulation.}
+	\label{figure-fluid-proprieties}
+\end{figure}
+
+The well has been initially set to be closed.
+%
+At the time of 0.1 days, the well began producing at the flow rate of 2515.92 bbl/d and ceased its production at the time 1.1 days.
+%
+Thus, a drawdown/buildup test has been simulated.
+%
+Figure \ref{figure-validation-flow-rates} illustrates these flow rate changes.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{figure-validation-flow-rates.png}
+	\caption{Well flow rate in the simulation. Negative values indicate production.}
+	\label{figure-validation-flow-rates}
+\end{figure}
+
+Figure \ref{figure-validation-bhp-homogeneous} shows the bottom hole pressure for this test, both for the results from CSPF and IMEX.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{figure-validation-bhp-homogeneous.png}
+	\caption{Comparison between the CSPF and IMEX for a drawdown/buildup well test in a homogeneous reservoir.}
+	\label{figure-validation-bhp-homogeneous}
+\end{figure}
+
+Between 0 and 0.1 days, the well is closed, therefore its bottom hole pressure does not change.
+%
+When the production starts, the BHP gets a steep decline until the production ceases.
+%
+Then, the pressure rises again, stabilizing itself with asymptotic behavior.
+%
+The difference between the initial stable BHP and the value stabilized after the test is proportional to the amount of oil produced in the reservoir because the production of oil will cause a depletion in the reservoir.
+%
+One could see that the results from CSPF and IMEX are very close.
+%
+A similar simulation has been done for the heterogeneous scenario, its results are shown in Figure \ref{figure-validation-bhp-heterogeneous}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{figure-validation-bhp-heterogeneous.png}
+	\caption{Comparison between the CSPF and IMEX for a drawdown/buildup well test in a heterogeneous and anisotropic reservoir.}
+	\label{figure-validation-bhp-heterogeneous}
+\end{figure}
+
+Looking at the results for the heterogeneous case in Figure \ref{figure-validation-bhp-heterogeneous}, one could see a modest change in comparison to the homogeneous results shown by Figure \ref{figure-validation-bhp-homogeneous}.
+%
+One difference is the minimum BHP, which is slightly lower in the second case.
+%
+Again, the CSPF results are very similar to IMEX´s.
+
+The difference between IMEX and CSPF for both scenarios has been plotted and displayed in Figure \ref{figure-validation-relative-differences}.
+%
+One explanation for these disparities could be the rounding dissimilarities between IMEX and CSPF, but overall the results are very similar.
+%
+When juxtaposing the Figure \ref{figure-validation-relative-differences} with the Figures \ref{figure-validation-bhp-homogeneous} and \ref{figure-validation-bhp-heterogeneous}, one could note that the relative differences are higher when the BHP variation is steeper.
+%
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\linewidth]{figure-validation-relative-differences.png}
+	\caption{Relative differences between CSPF and IMEX for the heterogeneous and homogeneous cases.}
+	\label{figure-validation-relative-differences}
+\end{figure}
+
+In conclusion, the results above show high accuracy in the simulator developed in this project compared to industry-standard software.
+
+
